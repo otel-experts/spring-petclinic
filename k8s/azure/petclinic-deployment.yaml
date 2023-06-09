@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic-deployment
+  labels:
+    group: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic-app
+  template:
+    metadata:
+      labels:
+        app: petclinic-app
+    spec:
+      containers:
+      - name: spring-petclinic
+        image: cloudmasters.azurecr.io/demo/spring-petclinic:3.1.0
+        imagePullPolicy: Always
+        env:
+          - name: SPLUNK_OTEL_AGENT
+            valueFrom:
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "http://$(SPLUNK_OTEL_AGENT):4317"
+          - name: OTEL_SERVICE_NAME
+            value: "petclinic"
+          - name: OTEL_RESOURCE_ATTRIBUTES
+            value: "deployment.environment=production"
+          - name: OTEL_JAVAAGENT_DEBUG
+            value: "true"
+          - name: MYSQL_URL
+            value: "jdbc:mysql://mysql/petclinic"
+        ports:
+        - containerPort: 8080

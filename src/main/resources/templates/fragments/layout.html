@@ -8,6 +8,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <script src="https://cdn.signalfx.com/o11y-gdi-rum/v0.15.3/splunk-otel-web.js" crossorigin="anonymous"></script>
+  <script>
+    SplunkRum.init({
+      beaconUrl: "https://rum-ingest.us1.signalfx.com/v1/rum",
+      rumAuth: "",
+      app: "petclinic",
+      environment: "production"
+    });
+  </script>
+
   <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
 
   <title>PetClinic :: a Spring Framework demonstration</title>

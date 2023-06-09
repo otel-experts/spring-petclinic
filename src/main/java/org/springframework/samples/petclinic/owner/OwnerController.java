@@ -18,6 +18,8 @@ package org.springframework.samples.petclinic.owner;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +45,7 @@ import jakarta.validation.Valid;
  */
 @Controller
 class OwnerController {
+	private static final Logger logger = LoggerFactory.getLogger(OwnerController.class);
 
 	private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
 
@@ -154,6 +157,7 @@ class OwnerController {
 	public ModelAndView showOwner(@PathVariable("ownerId") int ownerId) {
 		ModelAndView mav = new ModelAndView("owners/ownerDetails");
 		Owner owner = this.owners.findById(ownerId);
+		logger.info("Accessing owner page for " + owner.getFirstName() + " " + owner.getLastName());
 		mav.addObject(owner);
 		return mav;
 	}

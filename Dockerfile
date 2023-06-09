@@ -7,4 +7,4 @@ ENV JAVA_TOOL_OPTIONS=-javaagent:/opt/splunk-otel-javaagent.jar
 WORKDIR /app
 RUN chown -R javauser:javauser /app
 USER javauser
-CMD "java" "-Dsplunk.metrics.enabled=true" "-jar" "spring-petclinic-3.1.0.jar"
+CMD "java" "-javaagent:/opt/splunk-otel-javaagent.jar"  "-Dotel.javaagent.debug=true"  "-Dspring.profiles.active=mysql" "-Dsplunk.metrics.enabled=true" "-jar" "spring-petclinic-3.1.0.jar"
